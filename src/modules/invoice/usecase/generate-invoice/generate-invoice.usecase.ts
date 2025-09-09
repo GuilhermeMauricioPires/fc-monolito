@@ -7,10 +7,10 @@ import { GenerateInvoiceUseCaseInputDto, GenerateInvoiceUseCaseOutputDto } from 
 
 export default class GenerateInvoiceUseCase {
 
-    private _invoceRepository: InvoiceGateway;
+    private _invoiceRepository: InvoiceGateway;
 
     constructor(invoiceRepository: InvoiceGateway){
-        this._invoceRepository = invoiceRepository;
+        this._invoiceRepository = invoiceRepository;
     }
 
     async execute(input: GenerateInvoiceUseCaseInputDto): Promise<GenerateInvoiceUseCaseOutputDto> {
@@ -33,7 +33,7 @@ export default class GenerateInvoiceUseCase {
             ))
         };
         const invoice = new Invoice(props);
-        this._invoceRepository.generate(invoice);
+        await this._invoiceRepository.generate(invoice);
 
         return {
             id: invoice.id.id,
