@@ -35,7 +35,7 @@ export default class Order extends BaseEntity {
     }
 
     get status(): string {
-        return this.status;
+        return this._status;
     }
 
     get total(): number {

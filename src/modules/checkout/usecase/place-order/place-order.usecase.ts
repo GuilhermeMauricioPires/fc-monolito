@@ -66,26 +66,47 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         })
 
         //processar payment -> paymentFacede.process (orderId, amount)
-        // const payment = await this._paymentFacade.process({
-        //     orderId: orderPlace.id.id,
-        //     amount: orderPlace.total
-        // })
+        const payment = await this._paymentFacade.process({
+            orderId: orderPlace.id.id,
+            amount: orderPlace.total
+        })
 
         //caso pagamento aprovado, gerar invoice
-        // const invoice = 
-        //     payment.status === 'approved' ?
-        //         await this._invoiceFacade.generateInvoice 
-        //  mudar status da order para approved
-        //retornar dto
+        const invoice = 
+            payment.status === 'approved' ?
+                await this._invoiceFacade.generateInvoice({
+                    name: client.name,
+                    document: client.document,
+                    street: client.address.street,
+                    number: client.address.number,
+                    complement: client.address.complement,
+                    city: client.address.city,
+                    state: client.address.state,
+                    zipCode: client.address.zipCode,
+                    items: products.map((p) => {
+                        return {
+                            id: p.id.id,
+                            name: p.name,
+                            price: p.salesPrice
+                        }
+                    })
+                }) : null;
 
+        //  mudar status da order para approved
+        payment.status === "approved" && orderPlace.approved();
+        this._checkoutRepository.addOrder(orderPlace);
+        
+        //retornar dto
         return {
-            id: "0",
-            invoiceId: "0",
-            status: "0",
-            total: 0,
-            products: [
-                { productId: "0"}
-            ]
+            id: orderPlace.id.id,
+            invoiceId: payment.status === "approved" ? invoice.id : null,
+            status: orderPlace.status,
+            total: orderPlace.total,
+            products: products.map((p) => {
+                return {
+                    productId: p.id.id
+                }
+            })
         }
     }
 
