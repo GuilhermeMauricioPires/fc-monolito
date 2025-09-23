@@ -13,7 +13,7 @@ productAdmRouter.post('/', async(req: Request, res: Response) => {
             stock: req.body.stock
         }
         await productAdmFacade.addProduct(productDto);
-        res.status(201);
+        res.status(201).send();
     }catch(err){
         res.status(500).send(err);
     }
