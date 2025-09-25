@@ -46,7 +46,7 @@ export default class ClientRepository implements ClientGateway {
         client.zipcode,
       ),
       createdAt: client.createdAt,
-      updatedAt: client.createdAt
+      updatedAt: client.updatedAt
     })
   }
 }
