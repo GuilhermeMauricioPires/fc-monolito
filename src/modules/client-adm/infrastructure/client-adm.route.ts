@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express'
 import ClientAdmFacadeFactory from '../factory/client-adm.facade.factory';
 import Address from '../../@shared/domain/value-object/address';
+
 export const clientAdmRouter = express.Router();
 
 clientAdmRouter.post('/', async(req: Request, res: Response) => {

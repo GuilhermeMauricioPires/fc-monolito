@@ -28,7 +28,6 @@ describe("E2E test client-adm", () => {
         const response = await request(app)
             .post("/client")
             .send(clientProps);
-            console.log(response);
         expect(response.status).toBe(201);
     })
 
