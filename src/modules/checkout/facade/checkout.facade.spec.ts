@@ -10,42 +10,50 @@ import ProductAdmFacadeFactory from "../../product-adm/factory/facade.factory";
 import { ClientModel as ClientAdmModel } from "../../client-adm/repository/client.model";
 import { ProductModel as ProductAdmModel } from "../../product-adm/repository/product.model";
 import ProductStoreCatalogModel from "../../store-catalog/repository/product.model";
+import { Umzug } from "umzug";
+import { migrator } from "../../@shared/infrastructure/db/conf-migrations/migrator";
 
-describe("InvoinceFacade test", () => {
+describe("CheckoutFacade test", () => {
     let sequelize: Sequelize;
+    let migration: Umzug<any>;
     
     beforeEach(async () => {
         sequelize = new Sequelize({
             dialect: "sqlite",
             storage: ":memory:",
             logging: false,
-            sync: { force: true },
         });
-
+        
+        migration = migrator(sequelize)
+        await migration.up()
         await sequelize.addModels([OrderModel, ClientModel, ProductModel, ClientAdmModel, ProductAdmModel, ProductStoreCatalogModel]);
-        await sequelize.sync();
     });
 
     afterEach(async () => {
+        if (!migration || !sequelize) {
+            return 
+        }
+        migration = migrator(sequelize)
+        await migration.down()
         await sequelize.close();
     });
 
-    it("should create instance placeOrdeUseCase", async () => {
+    it("should place an order", async () => {
         
         const facadeClient = ClientAdmFacadeFactory.create()
         
         const inputClient = {
             id: "1",
-            name: "Lucian",
-            email: "lucian@xpto.com",
-            document: "1234-5678",
+            name: "Guilherme",
+            email: "guilherme@teste.com",
+            document: "01234567890",
             address: new Address(
-                "Rua 123",
-                "99",
-                "Casa Verde",
-                "Criciúma",
-                "SC",
-                "88888-888"
+                "Rua 1",
+                "1",
+                "Casa 1",
+                "Cidade 1",
+                "Estado 1",
+                "111111111"
             )
         }
     
@@ -72,6 +80,11 @@ describe("InvoinceFacade test", () => {
         };
 
         await productFacade.addProduct(inputProduct2);
+
+        const product1Db = await productFacade.checkStock({productId: "1"});
+        const product2Db = await productFacade.checkStock({productId: "2"});
+        console.log(product1Db);
+        console.log(product2Db);
 
         const checkoutFacade = CheckoutFacadeFactory.create();
         const input = {
