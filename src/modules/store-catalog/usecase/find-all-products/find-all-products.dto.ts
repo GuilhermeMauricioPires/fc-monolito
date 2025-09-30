@@ -3,6 +3,7 @@ export interface FindAllProductsDto {
     id: string;
     name: string;
     description: string;
+    purchasePrice: number;
     salesPrice: number;
   }[];
 }

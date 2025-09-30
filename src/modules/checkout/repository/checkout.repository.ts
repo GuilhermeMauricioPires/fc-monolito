@@ -2,7 +2,7 @@ import Order from "../domain/order.entity";
 import CheckoutGateway from "../gateway/checkout.gateway";
 import { ClientModel } from "./client.model";
 import { OrderModel } from "./order.model";
-import ProductModel from "./product.model";
+import CheckoutProductModel from "./checkout.product.model";
 
 export default class CheckoutRepository implements CheckoutGateway
 {
@@ -28,7 +28,7 @@ export default class CheckoutRepository implements CheckoutGateway
             status: order.status,
             createdAt: order.createdAt
         }, {
-            include: [ClientModel, ProductModel]
+            include: [ClientModel, CheckoutProductModel]
         })
     }
     

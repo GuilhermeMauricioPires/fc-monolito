@@ -37,7 +37,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
     }
     
     async execute(input: PlaceOrderInputDto): Promise<PlaceOrderOutputDto> {
-        console.log(input);
         //buscar cliente. Caso não encontre -> client not found
         const client = await this._clientFacade.find({id: input.clientId})
         if(!client){
@@ -64,6 +63,8 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
             client: clientPlaceOrder,
             products 
         })
+
+        console.log(orderPlace);
 
         //processar payment -> paymentFacede.process (orderId, amount)
         const payment = await this._paymentFacade.process({
@@ -116,7 +117,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         }
 
         for(const p of input.products) {
-            console.log(p);
             const product = await this._productFacade.checkStock({ productId: p.productId });
 
             if(product.stock === 0){
@@ -130,6 +130,7 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         if(!product){
             throw new Error(`Product ${productId} not found`);
         }
+        console.log(product);
         return new Product({
             id: new Id(product.id),
             name: product.name,

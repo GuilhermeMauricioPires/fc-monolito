@@ -2,6 +2,7 @@ import { DataTypes, Sequelize } from 'sequelize';
 import { MigrationFn } from 'umzug';
 
 export const up: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
+  console.log('🚀 Rodando migration: products (UP)');
   await sequelize.getQueryInterface().createTable('products', {
     id: {
       type: DataTypes.STRING(255),
@@ -20,7 +21,7 @@ export const up: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
       type: DataTypes.NUMBER,
       allowNull: true
     },
-    salePrice: {
+    salesPrice: {
       type: DataTypes.NUMBER,
       allowNull: true
     },
@@ -40,5 +41,6 @@ export const up: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
 };
 
 export const down: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
+  console.log('🧹 Revertendo migration: products (DOWN)');
   await sequelize.getQueryInterface().dropTable('products')
 } 

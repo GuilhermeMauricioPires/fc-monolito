@@ -1,6 +1,6 @@
 import { BelongsTo, Column, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { ClientModel } from "./client.model";
-import ProductModel from "./product.model";
+import CheckoutProductModel from "./checkout.product.model";
 
 @Table({
   tableName: 'checkout_order',
@@ -18,8 +18,8 @@ export class OrderModel extends Model {
     @BelongsTo(() => ClientModel)
     declare client: Awaited<ClientModel>;
 
-    @HasMany(() => ProductModel)
-    products: ProductModel[];
+    @HasMany(() => CheckoutProductModel)
+    products: CheckoutProductModel[];
 
     @Column({ allowNull: false })
     status: string

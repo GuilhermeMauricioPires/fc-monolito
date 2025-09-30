@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import { OrderModel } from "../repository/order.model";
 import { ClientModel } from "../repository/client.model";
-import ProductModel from "../repository/product.model";
+import CheckoutProductModel from "../repository/checkout.product.model";
 import CheckoutFacadeFactory from "../factory/checkout.facade.factory";
 import PlaceOrderUseCase from "../usecase/place-order/place-order.usecase";
 import ClientAdmFacadeFactory from "../../client-adm/factory/client-adm.facade.factory";
@@ -25,8 +25,10 @@ describe("CheckoutFacade test", () => {
         });
         
         migration = migrator(sequelize)
+        const pending = await migration.pending();
+        console.log('📌 Migrations pendentes:', pending.map(m => m.name));
         await migration.up()
-        await sequelize.addModels([OrderModel, ClientModel, ProductModel, ClientAdmModel, ProductAdmModel, ProductStoreCatalogModel]);
+        await sequelize.addModels([OrderModel, ClientModel, CheckoutProductModel, ClientAdmModel, ProductAdmModel, ProductStoreCatalogModel]);
     });
 
     afterEach(async () => {
@@ -80,11 +82,6 @@ describe("CheckoutFacade test", () => {
         };
 
         await productFacade.addProduct(inputProduct2);
-
-        const product1Db = await productFacade.checkStock({productId: "1"});
-        const product2Db = await productFacade.checkStock({productId: "2"});
-        console.log(product1Db);
-        console.log(product2Db);
 
         const checkoutFacade = CheckoutFacadeFactory.create();
         const input = {

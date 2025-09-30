@@ -1,10 +1,9 @@
 import { Sequelize } from "sequelize-typescript"
 import { OrderModel } from "./order.model"
 import { ClientModel } from "./client.model"
-import ProductModel from "./product.model"
+import CheckoutProductModel from "./checkout.product.model"
 import Order from "../domain/order.entity"
 import Id from "../../@shared/domain/value-object/id.value-object"
-import Address from "../../@shared/domain/value-object/address"
 import Client from "../domain/client.entity"
 import Product from "../domain/product.entity"
 import CheckoutRepository from "./checkout.repository"
@@ -21,7 +20,7 @@ describe("Checkout repository test", () => {
         sync: { force: true }
     })
 
-    sequelize.addModels([OrderModel, ClientModel, ProductModel])
+    sequelize.addModels([OrderModel, ClientModel, CheckoutProductModel])
         await sequelize.sync()
     })
 
@@ -60,7 +59,7 @@ describe("Checkout repository test", () => {
         await repository.addOrder(order);
 
         const orderDb = await OrderModel.findOne({
-            where: {id: order.id.id}, include: [ClientModel, ProductModel]
+            where: {id: order.id.id}, include: [ClientModel, CheckoutProductModel]
         })
 
         expect(orderDb.id).toBe(order.id.id);
