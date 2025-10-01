@@ -163,6 +163,7 @@ describe("Place order use case unit test", () => {
                     id: `${id}`,
                     name: `Product ${id}`,
                     description: `Product ${id} description`,
+                    purchasePrice: 10,
                     salesPrice: 10
                 })
             ),

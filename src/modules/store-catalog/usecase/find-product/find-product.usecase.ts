@@ -5,8 +5,6 @@ export default class FindProductUseCase {
   constructor(private readonly productRepository: ProductGateway) {}
 
   async execute(input: FindProductInputDto): Promise<FindProductOutputDto> {
-    try{
-
     const product = await this.productRepository.find(input.id);
 
     return {
@@ -16,9 +14,5 @@ export default class FindProductUseCase {
       purchasePrice: product.purchasePrice,
       salesPrice: product.salesPrice,
     };
-  }catch(err){
-    console.log(err);
-    throw err;
-  }
   }
 }

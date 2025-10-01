@@ -7,6 +7,7 @@ import CheckoutProductModel from "./checkout.product.model";
 export default class CheckoutRepository implements CheckoutGateway
 {
     async addOrder(order: Order): Promise<void> {
+        try{
         await OrderModel.create({
             id: order.id.id,
             client_id: order.client.id.id,
@@ -30,6 +31,10 @@ export default class CheckoutRepository implements CheckoutGateway
         }, {
             include: [ClientModel, CheckoutProductModel]
         })
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
     }
     
 }

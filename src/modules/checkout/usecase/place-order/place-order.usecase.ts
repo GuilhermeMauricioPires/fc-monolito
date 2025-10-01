@@ -64,14 +64,13 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
             products 
         })
 
-        console.log(orderPlace);
-
         //processar payment -> paymentFacede.process (orderId, amount)
         const payment = await this._paymentFacade.process({
             orderId: orderPlace.id.id,
             amount: orderPlace.total
         })
 
+        console.log(payment);
         //caso pagamento aprovado, gerar invoice
         const invoice = 
             payment.status === 'approved' ?
@@ -130,7 +129,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         if(!product){
             throw new Error(`Product ${productId} not found`);
         }
-        console.log(product);
         return new Product({
             id: new Id(product.id),
             name: product.name,

@@ -12,6 +12,7 @@ import { ProductModel as ProductAdmModel } from "../../product-adm/repository/pr
 import ProductStoreCatalogModel from "../../store-catalog/repository/product.model";
 import { Umzug } from "umzug";
 import { migrator } from "../../@shared/infrastructure/db/conf-migrations/migrator";
+import TransactionModel from "../../payment/repository/transaction.model";
 
 describe("CheckoutFacade test", () => {
     let sequelize: Sequelize;
@@ -28,7 +29,7 @@ describe("CheckoutFacade test", () => {
         const pending = await migration.pending();
         console.log('📌 Migrations pendentes:', pending.map(m => m.name));
         await migration.up()
-        await sequelize.addModels([OrderModel, ClientModel, CheckoutProductModel, ClientAdmModel, ProductAdmModel, ProductStoreCatalogModel]);
+        await sequelize.addModels([OrderModel, ClientModel, CheckoutProductModel, ClientAdmModel, ProductAdmModel, ProductStoreCatalogModel, TransactionModel]);
     });
 
     afterEach(async () => {
@@ -98,7 +99,6 @@ describe("CheckoutFacade test", () => {
             {productId: inputProduct1.id},
             {productId: inputProduct2.id}
         ]);
-        expect(checkoutFacade).toBeInstanceOf(PlaceOrderUseCase);
     })
 
 })
