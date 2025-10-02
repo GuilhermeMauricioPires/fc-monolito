@@ -50,14 +50,21 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         const products = await Promise.all(
             input.products.map((p) => this.getProducts(p.productId))
         );
-    
-        //criar objeto client
-        const clientPlaceOrder = new Client({
-            id: new Id(client.id),
-            name: client.name,
-            email: client.email,
-            address: client.address.street
-        })
+        
+        let clientPlaceOrder = await this._checkoutRepository.getClient(client.id);
+        console.log(clientPlaceOrder);
+        if(!clientPlaceOrder){
+            clientPlaceOrder = new Client({
+                id: new Id(client.id),
+                name: client.name,
+                email: client.email,
+                address: client.address.street
+            })
+
+            this._checkoutRepository.addClient(clientPlaceOrder);
+        }
+
+        
         //criar objeto order (client, products)
         const orderPlace = new Order({
             client: clientPlaceOrder,

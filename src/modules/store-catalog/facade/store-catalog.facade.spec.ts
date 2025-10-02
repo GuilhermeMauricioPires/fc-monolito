@@ -68,7 +68,7 @@ describe("StoreCatalogFacade test", () => {
     expect(result.products[1].id).toBe("2");
     expect(result.products[1].name).toBe("Product 2");
     expect(result.products[1].description).toBe("Description 2");
-    expect(result.products[0].purchasePrice).toBe(180);
+    expect(result.products[1].purchasePrice).toBe(180);
     expect(result.products[1].salesPrice).toBe(200);
   });
 });

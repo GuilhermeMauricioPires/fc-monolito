@@ -175,7 +175,10 @@ describe("Place order use case unit test", () => {
         }
 
         const mockCheckoutRepository = {
-            addOrder: jest.fn()
+            addOrder: jest.fn(),
+            addClient: jest.fn(),
+            addProduct: jest.fn(),
+            getClient: jest.fn()
         }
 
         const mockInvoiceFacede = {

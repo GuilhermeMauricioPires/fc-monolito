@@ -13,10 +13,10 @@ export class OrderModel extends Model {
 
     @ForeignKey(() => ClientModel)
     @Column({allowNull: false})
-    declare client_id: string;
+    client_id: string;
 
     @BelongsTo(() => ClientModel)
-    declare client: Awaited<ClientModel>;
+    client: ClientModel;
 
     @HasMany(() => CheckoutProductModel)
     products: CheckoutProductModel[];
