@@ -1,14 +1,14 @@
-import { app, sequilize } from "../../@shared/infrastructure/api/express";
+import { app, sequelize } from "../../@shared/infrastructure/api/express";
 import request from 'supertest';
 
 describe("E2E test client-adm", () => {
 
     beforeEach(async () => {
-        await sequilize.sync({force: true});
+        await sequelize.sync({force: true});
     })
 
     afterAll(async () => {
-        await sequilize.close();
+        await sequelize.close();
     })
 
     it("should create a client", async () => {

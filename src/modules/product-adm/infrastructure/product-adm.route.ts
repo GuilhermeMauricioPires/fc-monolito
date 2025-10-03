@@ -7,6 +7,7 @@ productAdmRouter.post('/', async(req: Request, res: Response) => {
     const productAdmFacade = ProductAdmFacadeFactory.create();
     try{
         const productDto = {
+            id: req.body.id,
             name: req.body.name,
             description: req.body.description,
             purchasePrice: req.body.purchasePrice,

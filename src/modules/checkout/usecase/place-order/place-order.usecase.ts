@@ -52,7 +52,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         );
         
         let clientPlaceOrder = await this._checkoutRepository.getClient(client.id);
-        console.log(clientPlaceOrder);
         if(!clientPlaceOrder){
             clientPlaceOrder = new Client({
                 id: new Id(client.id),
@@ -77,7 +76,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
             amount: orderPlace.total
         })
 
-        console.log(payment);
         //caso pagamento aprovado, gerar invoice
         const invoice = 
             payment.status === 'approved' ?
@@ -121,7 +119,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         if(input.products.length === 0) {
             throw new Error("No products selected");
         }
-
         for(const p of input.products) {
             const product = await this._productFacade.checkStock({ productId: p.productId });
 

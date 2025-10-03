@@ -13,7 +13,6 @@ export default class AddClientUseCase {
   }
 
   async execute(input: AddClientInputDto): Promise<AddClientOutputDto> {
-
     const props = {
       id: new Id(input.id) || new Id(),
       name: input.name,
@@ -28,10 +27,8 @@ export default class AddClientUseCase {
         input.address.zipCode,
       )
     }
-
     const client = new Client(props)
     await this._clientRepository.add(client)
-
     return {
       id: client.id.id,
       name: client.name,

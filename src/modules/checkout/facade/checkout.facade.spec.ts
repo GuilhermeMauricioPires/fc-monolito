@@ -3,7 +3,6 @@ import { OrderModel } from "../repository/order.model";
 import { ClientModel } from "../repository/client.model";
 import CheckoutProductModel from "../repository/checkout.product.model";
 import CheckoutFacadeFactory from "../factory/checkout.facade.factory";
-import PlaceOrderUseCase from "../usecase/place-order/place-order.usecase";
 import ClientAdmFacadeFactory from "../../client-adm/factory/client-adm.facade.factory";
 import Address from "../../@shared/domain/value-object/address";
 import ProductAdmFacadeFactory from "../../product-adm/factory/facade.factory";

@@ -8,6 +8,7 @@ clientAdmRouter.post('/', async(req: Request, res: Response) => {
     const clientAdmFacade = ClientAdmFacadeFactory.create();
     try{
         const clientDto = {
+            id: req.body.id,
             name: req.body.name,
             email: req.body.email,
             document: req.body.document,

@@ -33,7 +33,8 @@ describe("Checkout repository test", () => {
             id: new Id("1"),
             name: "Guilherme",
             email: "guilherme@teste.com",
-            address: "Rua 1"
+            address: "Rua 1",
+            createdAt: new Date()
         })
         const productProps = [
             new Product({
@@ -53,6 +54,14 @@ describe("Checkout repository test", () => {
             id: new Id("1"),
             client: clientProps,
             products: productProps,
+        })
+
+        await ClientModel.create({
+            id: clientProps.id.id,
+            name: clientProps.name,
+            email: clientProps.email,
+            address: clientProps.address,
+            createdAt: clientProps.createdAt
         })
 
         const repository = new CheckoutRepository();

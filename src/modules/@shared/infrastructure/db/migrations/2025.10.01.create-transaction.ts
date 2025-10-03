@@ -11,13 +11,7 @@ export const up: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
     },
     order_id: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      // references: {
-      //   model: 'checkout_order',
-      //   key: 'id',
-      // },
-      // onUpdate: 'CASCADE',
-      // onDelete: 'CASCADE',
+      allowNull: false
     },
     amount: {
       type: DataTypes.NUMBER,

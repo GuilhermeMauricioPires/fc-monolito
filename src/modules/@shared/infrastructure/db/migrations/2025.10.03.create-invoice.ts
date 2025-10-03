@@ -1,0 +1,58 @@
+import { DataTypes, Sequelize } from 'sequelize';
+import { MigrationFn } from 'umzug';
+
+export const up: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
+  console.log('🚀 Rodando migration: invoice (UP)');
+  await sequelize.getQueryInterface().createTable('invoice', {
+    id: {
+      type: DataTypes.STRING(255),
+      primaryKey: true,
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    document: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    street: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    number: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    complement: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    city: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    zipcode: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    }, 
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: true
+    }
+  })
+};
+
+export const down: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
+  console.log('🧹 Revertendo migration: invoice (DOWN)');
+  await sequelize.getQueryInterface().dropTable('invoice')
+} 

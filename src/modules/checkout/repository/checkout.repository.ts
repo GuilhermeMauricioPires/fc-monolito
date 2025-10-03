@@ -4,7 +4,6 @@ import { ClientModel } from "./client.model";
 import { OrderModel } from "./order.model";
 import CheckoutProductModel from "./checkout.product.model";
 import Client from "../domain/client.entity";
-import Product from "../domain/product.entity";
 import Id from "../../@shared/domain/value-object/id.value-object";
 
 export default class CheckoutRepository implements CheckoutGateway
@@ -37,11 +36,7 @@ export default class CheckoutRepository implements CheckoutGateway
             createdAt: client.createdAt
         })
     }
-    addProduct(product: Product): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
     async addOrder(order: Order): Promise<void> {
-        try{
         await OrderModel.create({
             id: order.id.id,
             client_id: order.client.id.id,
@@ -65,10 +60,5 @@ export default class CheckoutRepository implements CheckoutGateway
         }, {
             include: [CheckoutProductModel]
         })
-    }catch(err){
-        console.log(err);
-        throw err;
-    }
-    }
-    
+    }    
 }

@@ -8,11 +8,14 @@ checkoutRouter.post('/', async(req: Request, res: Response) => {
     try{
         const checkoutDto = {
             clientId: req.body.clientId,
-            products: req.body.products.map((productId: { productId: string; }) => {
-                productId
+            products: req.body.products.map((p: { productId: string; }) => {
+                return {
+                    productId: p.productId
+                }
             })
         }
-        // await checkoutFacade.
+        await checkoutFacade.place(checkoutDto);
+        res.status(201).send();
     } catch(err){
         res.status(500).send(err);
     }
